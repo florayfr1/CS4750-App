@@ -1,0 +1,26 @@
+Crime -> Day
+CrimeListFragment -> DayListFragment
+CriminalIntent ->JournalApp
+package com.bignerdranch.android.journalapp
+
+Emily 
+-AndroidMainfest
+-Crime
+-CrimeDetailViewModel
+-CrimeFragment
+-CrimeListFragment
+-CrimeListViewModel
+
+Megan
+-CrimeRepository
+-CriminalIntentApplication
+-DayPickerFragment
+-MainActivity
+-PictureUtils
+-CrimeDao
+
+Flora 
+-CrimeDatabase
+-CrimeTypeConverters
+All resources
+build gradle
