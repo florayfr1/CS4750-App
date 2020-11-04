@@ -38,7 +38,7 @@ class DayListFragment : Fragment() {
         super.onAttach(context)
         callbacks = context as Callbacks?
     }
-
+ 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
