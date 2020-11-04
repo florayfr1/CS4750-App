@@ -6,7 +6,7 @@ import android.util.Log
 import java.util.*
 private  const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity(),
-    CrimeListFragment.Callbacks{
+    DayListFragment.Callbacks{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity(),
         val currentFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container)
         if (currentFragment == null) {
-            val fragment = CrimeListFragment.newInstance()
+            val fragment = DayListFragment.newInstance()
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fragment_container, fragment)
@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onCrimeSelected(crimeId: UUID) {
-        val fragment = CrimeFragment.newInstance(crimeId)
+    override fun onDaySelected(dayId: UUID) {
+        val fragment = DayFragment.newInstance(dayId)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment)

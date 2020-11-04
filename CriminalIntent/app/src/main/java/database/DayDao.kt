@@ -9,17 +9,17 @@ import com.bignerdranch.android.criminalintent.Crime
 import java.util.*
 
 @Dao
-interface CrimeDao{
-    @Query("SELECT * FROM crime")
-    fun getCrimes(): LiveData<List<Crime>>
+interface DayDao{
+    @Query("SELECT * FROM day")
+    fun getDays(): LiveData<List<Day>>
 
     @Query("SELECT * FROM crime WHERE id=(:id)")
-    fun getCrime(id: UUID): LiveData<Crime?>
+    fun getDay(id: UUID): LiveData<Day?>
 
     @Update
-    fun updateCrime(crime: Crime)
+    fun updateDay(day: Day)
 
     @Insert
-    fun addCrime(crime: Crime)
+    fun addDay(day: Day)
 }
 
