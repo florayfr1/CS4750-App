@@ -20,7 +20,8 @@ Megan
 -CrimeDao
 
 Flora 
--CrimeDatabase
--CrimeTypeConverters
-All resources
-build gradle
+-CrimeDatabase 			ok
+-CrimeTypeConverters		ok
+All resources			ok
+	*did not add images	
+build gradle			ok
