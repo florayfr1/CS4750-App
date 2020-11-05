@@ -8,7 +8,6 @@ import java.io.File
 import java.util.*
 import java.util.concurrent.Executors
 
-
 private const val DATABASE_NAME = "day-database"
 
 
@@ -57,3 +56,5 @@ class DayRepository private constructor(context: Context) {
         }
     }
 }
+
+

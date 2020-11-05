@@ -5,21 +5,21 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.bignerdranch.android.criminalintent.Crime
+import com.bignerdranch.android.journal.Crime
 import java.util.*
 
 @Dao
-interface DayDao{
-    @Query("SELECT * FROM day")
-    fun getDays(): LiveData<List<Day>>
+interface CrimeDao{
+    @Query("SELECT * FROM crime")
+    fun getCrimes(): LiveData<List<Crime>>
 
     @Query("SELECT * FROM crime WHERE id=(:id)")
-    fun getDay(id: UUID): LiveData<Day?>
+    fun getCrime(id: UUID): LiveData<Crime?>
 
     @Update
-    fun updateDay(day: Day)
+    fun updateCrime(crime: Crime)
 
     @Insert
-    fun addDay(day: Day)
+    fun addCrime(crime: Crime)
 }
 

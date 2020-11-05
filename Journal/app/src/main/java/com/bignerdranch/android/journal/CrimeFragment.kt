@@ -1,4 +1,4 @@
-package com.bignerdranch.android.journalapp
+package com.bignerdranch.android.journal
 
 import android.app.Activity
 import android.content.Intent
@@ -11,7 +11,6 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,11 +21,10 @@ import androidx.lifecycle.ViewModelProviders
 import java.util.*
 import androidx.lifecycle.Observer
 import java.io.File
-import java.lang.String.format
 
 
-private const val TAG = "DayFragment"
-private const val ARG_DAY_ID = "day_id"
+private const val TAG = "CrimeFragment"
+private const val ARG_CRIME_ID = "crime_id"
 private const val DIALOG_DATE = "DialogDate"
 private const val REQUEST_DATE = 0
 
@@ -34,8 +32,8 @@ private const val DATE_FORMAT = "EEE, MMM, dd"
 private const val REQUEST_CONTACT = 1
 private const val REQUEST_PHOTO = 2
 
-class DayFragment : Fragment(), DatePickerFragment.Callbacks{
-    private lateinit var day: Day
+class CrimeFragment : Fragment(), DatePickerFragment.Callbacks{
+    private lateinit var crime: Crime
     private lateinit var titleField: EditText
     private lateinit var dateButton: Button
     private lateinit var solvedCheckBox: CheckBox
@@ -47,16 +45,16 @@ class DayFragment : Fragment(), DatePickerFragment.Callbacks{
     private lateinit var photoFile: File
     private lateinit var photoUri: Uri
 
-    private val dayDetailViewModel: DayDetailViewModel by lazy {
-        ViewModelProviders.of(this).get(DayDetailViewModel::class.java)
+    private val crimeDetailViewModel: CrimeDetailViewModel by lazy {
+        ViewModelProviders.of(this).get(CrimeDetailViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        day = Day()
-        val dayId: UUID = arguments?.getSerializable(ARG_DAY_ID) as
+        crime = Crime()
+        val crimeId: UUID = arguments?.getSerializable(ARG_CRIME_ID) as
                 UUID
-        dayDetailViewModel.loadDay(dayId)
+        crimeDetailViewModel.loadCrime(crimeId)
     }
 
     override fun onCreateView(
@@ -64,16 +62,16 @@ class DayFragment : Fragment(), DatePickerFragment.Callbacks{
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_day,container,false)
+        val view = inflater.inflate(R.layout.fragment_crime,container,false)
 
-        titleField = view.findViewById(R.id.day_title) as EditText
-        dateButton = view.findViewById(R.id.day_date) as Button
-        solvedCheckBox = view.findViewById(R.id.day_solved) as CheckBox
-        reportButton = view.findViewById(R.id.day_report) as Button
-        suspectButton = view.findViewById(R.id.day_suspect) as Button
+        titleField = view.findViewById(R.id.crime_title) as EditText
+        dateButton = view.findViewById(R.id.crime_date) as Button
+        solvedCheckBox = view.findViewById(R.id.crime_solved) as CheckBox
+        reportButton = view.findViewById(R.id.crime_report) as Button
+        suspectButton = view.findViewById(R.id.crime_suspect) as Button
 
-        photoButton = view.findViewById(R.id.day_camera) as ImageButton
-        photoView = view.findViewById(R.id.day_photo) as ImageView
+        photoButton = view.findViewById(R.id.crime_camera) as ImageButton
+        photoView = view.findViewById(R.id.crime_photo) as ImageView
 
         return view
     }
@@ -81,15 +79,15 @@ class DayFragment : Fragment(), DatePickerFragment.Callbacks{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        dayDetailViewModel.dayLiveData.observe(
+        crimeDetailViewModel.crimeLiveData.observe(
             viewLifecycleOwner,
-            Observer { day ->
-                day?.let {
-                    this.day = day
-                    photoFile = dayDetailViewModel.getPhotoFile(day)
+            Observer { crime ->
+                crime?.let {
+                    this.crime = crime
+                    photoFile = crimeDetailViewModel.getPhotoFile(crime)
                     photoUri =
                         FileProvider.getUriForFile(requireActivity(),
-                            "com.bignerdranch.android.journalapp.fileprovider",
+                            "com.bignerdranch.android.journal.fileprovider",
                             photoFile)
 
                     updateUI()
@@ -116,7 +114,7 @@ class DayFragment : Fragment(), DatePickerFragment.Callbacks{
                 before: Int,
                 count: Int
             ) {
-                day.title = sequence.toString()
+                crime.title = sequence.toString()
             }
 
             override fun afterTextChanged(sequence: Editable?) {
@@ -128,14 +126,14 @@ class DayFragment : Fragment(), DatePickerFragment.Callbacks{
 
         solvedCheckBox.apply {
             setOnCheckedChangeListener{ _, isChecked ->
-                day.isSolved = isChecked
+                crime.isSolved = isChecked
             }
         }
 
         dateButton.setOnClickListener {
-            DatePickerFragment.newInstance(day.date).apply {
-                setTargetFragment(this@DayFragment, REQUEST_DATE)
-                show(this@DayFragment.requireFragmentManager(),
+            DatePickerFragment.newInstance(crime.date).apply {
+                setTargetFragment(this@CrimeFragment, REQUEST_DATE)
+                show(this@CrimeFragment.requireFragmentManager(),
                     DIALOG_DATE)
             }
         }
@@ -143,10 +141,10 @@ class DayFragment : Fragment(), DatePickerFragment.Callbacks{
         reportButton.setOnClickListener {
             Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, getDayReport())
+                putExtra(Intent.EXTRA_TEXT, getCrimeReport())
                 putExtra(
                     Intent.EXTRA_SUBJECT,
-                    getString(R.string.day_report_subject))
+                    getString(R.string.crime_report_subject))
             }.also { intent ->
                 val chooserIntent =
                     Intent.createChooser(intent,
@@ -206,7 +204,7 @@ class DayFragment : Fragment(), DatePickerFragment.Callbacks{
 
     override fun onStop() {
         super.onStop()
-        dayDetailViewModel.saveDay(day)
+        crimeDetailViewModel.saveCrime(crime)
     }
 
     override fun onDetach() {
@@ -216,19 +214,19 @@ class DayFragment : Fragment(), DatePickerFragment.Callbacks{
     }
 
     override fun onDateSelected(date: Date) {
-        day.date = date
+        crime.date = date
         updateUI()
     }
 
     private fun updateUI() {
-        titleField.setText(day.title)
-        dateButton.text = day.date.toString()
+        titleField.setText(crime.title)
+        dateButton.text = crime.date.toString()
         solvedCheckBox.apply {
-            isChecked = day.isSolved
+            isChecked = crime.isSolved
             jumpDrawablesToCurrentState()
         }
-        if (day.suspect.isNotEmpty()) {
-            suspectButton.text = day.suspect
+        if (crime.suspect.isNotEmpty()) {
+            suspectButton.text = crime.suspect
         }
         updatePhotoView()
     }
@@ -264,10 +262,10 @@ class DayFragment : Fragment(), DatePickerFragment.Callbacks{
                     }
 // Pull out the first column of the first row of data -
 // that is your suspect's name
-                    it.moveToFirst()
+                            it.moveToFirst()
                     val suspect = it.getString(0)
-                    day.suspect = suspect
-                    dayDetailViewModel.saveDay(day)
+                    crime.suspect = suspect
+                    crimeDetailViewModel.saveCrime(crime)
                     suspectButton.text = suspect
                 }
             }
@@ -279,34 +277,32 @@ class DayFragment : Fragment(), DatePickerFragment.Callbacks{
         }
     }
 
-    private fun getDayReport(): String {
-        val solvedString = if (day.isSolved) {
-            getString(R.string.day_report_solved)
+    private fun getCrimeReport(): String {
+        val solvedString = if (crime.isSolved) {
+            getString(R.string.crime_report_solved)
         } else {
-            getString(R.string.day_report_unsolved)
+            getString(R.string.crime_report_unsolved)
         }
         val dateString = DateFormat.format(DATE_FORMAT,
-            day.date).toString()
-        var suspect = if (day.suspect.isBlank()) {
-            getString(R.string.day_report_no_suspect)
+            crime.date).toString()
+        var suspect = if (crime.suspect.isBlank()) {
+            getString(R.string.crime_report_no_suspect)
         } else {
-            getString(R.string.day_report_suspect, day.suspect)
+            getString(R.string.crime_report_suspect, crime.suspect)
         }
-        return getString(R.string.day_report,
-            day.title, dateString, solvedString, suspect)
+        return getString(R.string.crime_report,
+            crime.title, dateString, solvedString, suspect)
     }
 
     companion object{
-        fun newInstance(dayId: UUID): DayFragment
+        fun newInstance(crimeId: UUID): CrimeFragment
         {
             val args = Bundle().apply{
-                putSerializable(ARG_DAY_ID, dayId)
+                putSerializable(ARG_CRIME_ID, crimeId)
             }
-            return  DayFragment().apply {
+            return  CrimeFragment().apply {
                 arguments = args
             }
         }
     }
 }
-
-
