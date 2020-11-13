@@ -220,7 +220,8 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
 
     private fun updateUI() {
         titleField.setText(entry.title)
-        dateButton.text = entry.date.toString()
+        val dateFormat: java.text.DateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG, Locale.US)
+        dateButton.text = dateFormat.format(entry.date)
         solvedCheckBox.apply {
             isChecked = entry.isSolved
             jumpDrawablesToCurrentState()
