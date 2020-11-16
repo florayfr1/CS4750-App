@@ -15,6 +15,7 @@ abstract class EntryDatabase : RoomDatabase() {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.execSQL(
                 "ALTER TABLE Entry ADD COLUMN suspect TEXT NOT NULL DEFAULT''"
+
             )
         }
     }

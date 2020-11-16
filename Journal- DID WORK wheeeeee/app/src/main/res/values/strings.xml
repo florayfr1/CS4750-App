@@ -1,15 +1,26 @@
 <resources>
     <string name="app_name">Journal</string>
-    <string name="entry_title_hint">Enter a title for the entry.
-</string>
+    <string name="entry_title_hint">Enter a title for the day.</string>
+    <string name="entry_good_hint">Type something good that happened.</string>
+
+    <string name="entry_photo_label">PHOTO OF THE DAY</string>
+    <string name="entry_video_label">SONG OF THE DAY</string>
+
     <string name="entry_title_label">Title</string>
-    <string name="entry_details_label">Details</string>
+    <string name="entry_greeting">HELLO!</string>
+    <string name="entry_mood_label">HOW DID YOUR DAY GO?</string>
+    <string name="entry_good_label">WHAT WENT WELL TODAY?</string>
     <string name="entry_solved_label">Solved</string>
     <string name="new_entry">New Entry</string>
     <string name="entry_suspect_text">Choose Suspect</string>
-    <string name="entry_report_text">Send Entry Report</string>
+    <string name="entry_report_text">SHARE WITH FRIENDS!</string>
     <string name="entry_title">Entry Title</string>
     <string name="entry_date">Entry Date</string>
+    <string name="entry_good1">Good 1</string>
+    <string name="entry_good2">Good 2</string>
+    <string name="entry_good3">Good 3</string>
+
+
 
     <string name="entry_report">%1$s!
 The entry was discovered on %2$s. %3$s, and %4$s
