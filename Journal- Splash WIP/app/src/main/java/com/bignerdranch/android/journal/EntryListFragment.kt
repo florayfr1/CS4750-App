@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.io.File
 import java.text.DateFormat
 import java.util.*
 
@@ -128,9 +129,15 @@ class EntryListFragment : Fragment() {
             val dateFormat: DateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.US)
             dateTextView.text = dateFormat.format(this.entry.date)
             solvedImageView.visibility = if (entry.isSolved) {
-                View.VISIBLE
+
+            val photoFile : File = EntryRepository.get().getPhotoFile(entry)
+
+            if (photoFile.exists()) {
+                val bitmap = getScaledBitmap(photoFile.path,
+                    requireActivity())
+                solvedImageView.setImageBitmap(bitmap)
             } else {
-                View.GONE
+                solvedImageView.setImageDrawable(null)
             }
         }
 
