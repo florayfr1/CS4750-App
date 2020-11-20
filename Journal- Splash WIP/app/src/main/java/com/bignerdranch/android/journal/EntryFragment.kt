@@ -35,6 +35,9 @@ private const val REQUEST_PHOTO = 2
 class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
     private lateinit var entry: Entry
     private lateinit var titleField: EditText
+    private lateinit var goodField1: EditText
+    private lateinit var goodField2: EditText
+    private lateinit var goodField3: EditText
     private lateinit var dateButton: Button
     private lateinit var solvedCheckBox: CheckBox
     private lateinit var reportButton: Button
@@ -65,6 +68,10 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         val view = inflater.inflate(R.layout.fragment_entry,container,false)
 
         titleField = view.findViewById(R.id.entry_title) as EditText
+        goodField1 = view.findViewById(R.id.entry_good1) as EditText
+        goodField2 = view.findViewById(R.id.entry_good2) as EditText
+        goodField3 = view.findViewById(R.id.entry_good3) as EditText
+
         dateButton = view.findViewById(R.id.entry_date) as Button
         solvedCheckBox = view.findViewById(R.id.entry_solved) as CheckBox
         reportButton = view.findViewById(R.id.entry_report) as Button
@@ -123,6 +130,82 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         }
 
         titleField.addTextChangedListener(titleWatcher)
+
+        val goodWatcher1 = object : TextWatcher {
+            override fun beforeTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+                // This space intentionally left blank
+            }
+
+            override fun onTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                entry.good1 = sequence.toString()
+            }
+
+            override fun afterTextChanged(sequence: Editable?) {
+                // This one too
+            }
+        }
+
+        val goodWatcher2 = object : TextWatcher {
+            override fun beforeTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+                // This space intentionally left blank
+            }
+
+            override fun onTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                entry.good2 = sequence.toString()
+            }
+
+            override fun afterTextChanged(sequence: Editable?) {
+                // This one too
+            }
+        }
+
+        val goodWatcher3 = object : TextWatcher {
+            override fun beforeTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+                // This space intentionally left blank
+            }
+
+            override fun onTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                entry.good3 = sequence.toString()
+            }
+
+            override fun afterTextChanged(sequence: Editable?) {
+                // This one too
+            }
+        }
+
+        goodField1.addTextChangedListener(goodWatcher1)
+        goodField2.addTextChangedListener(goodWatcher2)
+        goodField3.addTextChangedListener(goodWatcher3)
 
         solvedCheckBox.apply {
             setOnCheckedChangeListener{ _, isChecked ->
@@ -220,6 +303,11 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
 
     private fun updateUI() {
         titleField.setText(entry.title)
+        goodField1.setText(entry.good1)
+        goodField2.setText(entry.good2)
+        goodField3.setText(entry.good3)
+
+
         val dateFormat: java.text.DateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG, Locale.US)
         dateButton.text = dateFormat.format(entry.date)
         solvedCheckBox.apply {

@@ -7,18 +7,20 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.bignerdranch.android.journal.Entry
 
-@Database(entities = [ Entry::class ], version=2)
+@Database(entities = [ Entry::class ], version=5)
 @TypeConverters(EntryTypeConverters::class)
 abstract class EntryDatabase : RoomDatabase() {
 
-    object migration_1_2 : Migration(1,2) {
+    object migration_4_5 : Migration(4,5) {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.execSQL(
-                "ALTER TABLE Entry ADD COLUMN suspect TEXT NOT NULL DEFAULT''"
+                "ALTER TABLE Entry ADD COLUMN good3 TEXT NOT NULL DEFAULT''"
 
             )
         }
     }
+
+
 
     abstract fun entryDao(): EntryDao
 
