@@ -126,6 +126,7 @@ class EntryListFragment : Fragment() {
         fun bind(entry: Entry) {
             this.entry = entry
             titleTextView.text = this.entry.title
+
             val dateFormat: DateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.US)
             dateTextView.text = dateFormat.format(this.entry.date)
 

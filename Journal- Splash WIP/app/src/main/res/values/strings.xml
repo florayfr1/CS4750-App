@@ -10,7 +10,7 @@
     <string name="entry_greeting">HELLO!\nHOW DID YOUR DAY GO?</string>
     <string name="entry_mood_label">HOW DID YOUR DAY GO?</string>
     <string name="entry_good_label">WHAT WENT WELL TODAY?</string>
-    <string name="entry_solved_label">Solved</string>
+    <string name="entry_solved_label">Save image</string>
     <string name="new_entry">New Entry</string>
     <string name="entry_suspect_text">Choose Suspect</string>
     <string name="entry_report_text">SHARE WITH FRIENDS!</string>

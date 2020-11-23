@@ -17,10 +17,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
-import java.util.*
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import java.io.File
+import java.util.*
 
 
 private const val TAG = "EntryFragment"
@@ -38,11 +38,15 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
     private lateinit var goodField1: EditText
     private lateinit var goodField2: EditText
     private lateinit var goodField3: EditText
+    private lateinit var rateBar: RatingBar
+
     private lateinit var dateButton: Button
     private lateinit var solvedCheckBox: CheckBox
     private lateinit var reportButton: Button
     private lateinit var suspectButton: Button
     private lateinit var photoButton: ImageButton
+    private lateinit var galleryButton: ImageButton
+
     private lateinit var photoView: ImageView
 
     private lateinit var photoFile: File
@@ -71,13 +75,15 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         goodField1 = view.findViewById(R.id.entry_good1) as EditText
         goodField2 = view.findViewById(R.id.entry_good2) as EditText
         goodField3 = view.findViewById(R.id.entry_good3) as EditText
-
+        rateBar = view.findViewById(R.id.ratingBar) as RatingBar
         dateButton = view.findViewById(R.id.entry_date) as Button
         solvedCheckBox = view.findViewById(R.id.entry_solved) as CheckBox
         reportButton = view.findViewById(R.id.entry_report) as Button
         suspectButton = view.findViewById(R.id.entry_suspect) as Button
 
         photoButton = view.findViewById(R.id.entry_camera) as ImageButton
+        photoButton = view.findViewById(R.id.entry_gallery) as ImageButton
+
         photoView = view.findViewById(R.id.entry_photo) as ImageView
 
         return view
@@ -207,6 +213,9 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         goodField2.addTextChangedListener(goodWatcher2)
         goodField3.addTextChangedListener(goodWatcher3)
 
+        rateBar.setOnRatingBarChangeListener { ratingBar, _, b ->
+            entry.rating = ratingBar.rating
+        }
         solvedCheckBox.apply {
             setOnCheckedChangeListener{ _, isChecked ->
                 entry.isSolved = isChecked
@@ -283,6 +292,8 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
                 startActivityForResult(captureImage, REQUEST_PHOTO)
             }
         }
+
+
     }
 
     override fun onStop() {
@@ -306,7 +317,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         goodField1.setText(entry.good1)
         goodField2.setText(entry.good2)
         goodField3.setText(entry.good3)
-
+        rateBar.rating = entry.rating
 
         val dateFormat: java.text.DateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG, Locale.US)
         dateButton.text = dateFormat.format(entry.date)

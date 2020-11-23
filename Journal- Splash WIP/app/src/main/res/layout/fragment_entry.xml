@@ -12,7 +12,8 @@
         tools:text="Wed Nov 14 11:56 EST 2018"/>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,17 +62,32 @@
                     android:layout_gravity="center_horizontal"
                     android:scaleType="centerInside" />
 
-                <ImageButton
-                    android:id="@+id/entry_camera"
-                    android:layout_width="200dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@android:drawable/ic_menu_camera"/>
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal">
+
+                    <ImageButton
+                        android:id="@+id/entry_camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@android:drawable/ic_menu_camera"/>
+                    <ImageButton
+                        android:id="@+id/entry_gallery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@android:drawable/ic_menu_gallery"/>
+
+                </LinearLayout>
 
                 <CheckBox
                     android:id="@+id/entry_solved"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:text="@string/entry_solved_label" />
             </LinearLayout>
 
