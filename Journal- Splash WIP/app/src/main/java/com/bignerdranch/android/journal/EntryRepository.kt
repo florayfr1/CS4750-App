@@ -20,7 +20,7 @@ class EntryRepository private constructor(context: Context) {
         context.applicationContext,
         EntryDatabase::class.java,
         DATABASE_NAME
-    ).addMigrations(EntryDatabase.migration_1_2)
+    ).addMigrations(EntryDatabase.migration_5_6)
         .build()
 
     private val entryDao = database.entryDao()
