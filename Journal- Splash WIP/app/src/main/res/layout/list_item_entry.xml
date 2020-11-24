@@ -10,15 +10,17 @@
         android:id="@+id/entry_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="casual"
         android:text="@string/entry_title"
-        android:textColor="@android:color/black"
 
+
+        android:textColor="@color/brown"
 
         android:textSize="18sp"
+        android:typeface="normal"
 
         app:layout_constraintBottom_toTopOf="@+id/entry_date"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toEndOf="@+id/entry_solved"
         app:layout_constraintTop_toTopOf="parent"
