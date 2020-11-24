@@ -3,6 +3,9 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="cream">#f2dcec</color>
+    <color name="brown">#332108</color>
+    <color name="latte">#c7a56d</color>
     <color name="gray">#444440</color>
 
 
