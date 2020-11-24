@@ -3,15 +3,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cream"
+    android:background="@drawable/bg"
     android:layout_margin="1dp">
 
     <Button
         android:id="@+id/entry_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/brown"
-        android:textColor="@color/cream"
+        android:background="#96c418"
+        android:textColor="@color/brown"
+        android:fontFamily="casual"
+        android:textStyle="bold"
         tools:text="Wed Nov 14 11:56 EST 2018" />
     <ScrollView
         android:layout_width="match_parent"
@@ -30,6 +32,8 @@
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="casual"
                 android:gravity="center_horizontal"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
                 android:text="@string/entry_greeting"
                 android:textColor="@color/brown"
                 android:typeface="normal" />
@@ -40,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"
-                android:progressTint="@color/latte"
+                android:progressTint="@color/cream"
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_horizontal"
                 />
@@ -51,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="casual"
+                android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:text="@string/entry_photo_label"
                 android:textColor="@color/brown" />
@@ -69,7 +74,9 @@
                     android:cropToPadding="true"
                     android:gravity="center_horizontal"
                     android:layout_gravity="center_horizontal"
-                    android:scaleType="centerInside" />
+                    android:scaleType="centerInside"
+                    android:layout_margin="10dp"
+                    />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -82,13 +89,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@android:drawable/ic_menu_camera"/>
+                        android:src="@android:drawable/ic_menu_camera"
+                        android:background="@color/latte"
+                        android:layout_margin="10dp"
+
+                        />
                     <ImageButton
                         android:id="@+id/entry_gallery"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@android:drawable/ic_menu_gallery"/>
+                        android:src="@android:drawable/ic_menu_gallery"
+                        android:background="@color/latte"
+                        />
 
                 </LinearLayout>
 
@@ -96,7 +109,10 @@
                     android:id="@+id/entry_solved"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="casual"
+
                     android:layout_gravity="center_horizontal"
+                    android:textColor="@color/brown"
                     android:text="@string/entry_solved_label" />
             </LinearLayout>
 
@@ -123,12 +139,15 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
                 android:text="@string/entry_title_label"
+                android:textStyle="bold"
                 android:textColor="@color/brown" />
 
             <EditText
                 android:id="@+id/entry_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:textCursorDrawable="@color/cream"
                 android:hint="@string/entry_title_hint" />
 
             <TextView
@@ -142,6 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
+                android:textStyle="bold"
                 android:text="@string/entry_good_label"
                 android:textColor="@color/brown" />
 
@@ -157,7 +177,8 @@
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="cursive"
+                        android:fontFamily="casual"
+                        android:textStyle="bold"
                         android:text="       1       "
                         android:textColor="@color/brown" />
 
@@ -165,6 +186,7 @@
                         android:id="@+id/entry_good1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="casual"
                         android:hint="@string/entry_good_hint" />
                 </TableRow>
 
@@ -177,12 +199,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="casual"
+                        android:textStyle="bold"
                         android:text="       2       "
                         android:textColor="@color/brown" />
                     <EditText
                         android:id="@+id/entry_good2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="casual"
+
                         android:hint="@string/entry_good_hint" />
                 </TableRow>
 
@@ -195,12 +220,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="casual"
+                        android:textStyle="bold"
                         android:text="       3       "
                         android:textColor="@color/brown" />
                     <EditText
                         android:id="@+id/entry_good3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="casual"
+
                         android:hint="@string/entry_good_hint" />
                 </TableRow>
 
@@ -224,6 +252,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
+                    android:fontFamily="casual"
+                    android:textStyle="bold"
                     android:text="@string/entry_video_label"
                     android:textColor="@color/brown" />
 
@@ -241,13 +271,23 @@
                 android:id="@+id/entry_suspect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:background="@color/latte"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
                 android:text="@string/entry_suspect_text"/>
             <Button
                 android:id="@+id/entry_report"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
                 android:layout_gravity="center_horizontal"
+                android:background="@color/cream"
+                android:layout_marginBottom="20dp"
                 android:text="@string/entry_report_text"/>
         </LinearLayout>
     </ScrollView>

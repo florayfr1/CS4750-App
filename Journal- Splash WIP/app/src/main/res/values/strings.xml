@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Journal</string>
+    <string name="app_name">Days Go By</string>
     <string name="entry_title_hint">Enter a title for the day.</string>
     <string name="entry_good_hint">Type something good that happened.</string>
 
@@ -12,8 +12,8 @@
     <string name="entry_good_label">WHAT WENT WELL TODAY?</string>
     <string name="entry_solved_label">Save image</string>
     <string name="new_entry">New Entry</string>
-    <string name="entry_suspect_text">Choose Suspect</string>
-    <string name="entry_report_text">SHARE WITH FRIENDS!</string>
+    <string name="entry_suspect_text">  SELECT SONG  </string>
+    <string name="entry_report_text">  SHARE WITH FRIENDS!  </string>
     <string name="entry_title">Entry Title</string>
     <string name="entry_date">Entry Date</string>
     <string name="entry_good1">Good 1</string>
@@ -22,14 +22,13 @@
 
 
 
-    <string name="entry_report">%1$s!
-The entry was discovered on %2$s. %3$s, and %4$s
+    <string name="entry_report">%1$s!\n
+On %2$s. %3$s, I felt %4$s. Some good things that happened are: %5$s. %6$s
 </string>
-    <string name="entry_report_solved">The case is solved</string>
-    <string name="entry_report_unsolved">The case is not solved</string>
-    <string name="entry_report_no_suspect">there is no suspect.</string>
-    <string name="entry_report_suspect">the suspect is %s.</string>
-    <string name="entry_report_subject">Journal Entry
-Report</string>
+    <string name="entry_report_solved"></string>
+    <string name="entry_report_unsolved"></string>
+    <string name="entry_report_no_suspect">I did not find any new songs this day.</string>
+    <string name="entry_report_suspect">check out this cool song I found %s!</string>
+    <string name="entry_report_subject">My Journal Entry!</string>
     <string name="send_report">Send entry report via</string>
 </resources>

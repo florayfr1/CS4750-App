@@ -45,7 +45,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
     private lateinit var reportButton: Button
     private lateinit var suspectButton: Button
     private lateinit var photoButton: ImageButton
-    private lateinit var galleryButton: ImageButton
+    //private lateinit var galleryButton: ImageButton
 
     private lateinit var photoView: ImageView
 
@@ -82,7 +82,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         suspectButton = view.findViewById(R.id.entry_suspect) as Button
 
         photoButton = view.findViewById(R.id.entry_camera) as ImageButton
-        photoButton = view.findViewById(R.id.entry_gallery) as ImageButton
+        //galleryButton = view.findViewById(R.id.entry_gallery) as ImageButton
 
         photoView = view.findViewById(R.id.entry_photo) as ImageView
 
@@ -383,15 +383,56 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         } else {
             getString(R.string.entry_report_unsolved)
         }
-        val dateString = DateFormat.format(DATE_FORMAT,
-            entry.date).toString()
-        var suspect = if (entry.suspect.isBlank()) {
+
+        val dateFormat: java.text.DateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG, Locale.US)
+        val dateString = dateFormat.format(entry.date)
+
+        var ratingString = "neutral"
+        ratingString = when (entry.rating) {
+            0F -> "horrible"
+            0.5F -> "horrible"
+            1F -> "horrible"
+            1.5F -> "bad"
+            2F -> "bad"
+            2.5F -> "okay"
+            3F -> "okay"
+            3.5F -> "great"
+            4F -> "great"
+            4.5F -> "amazing"
+            5F -> "amazing"
+            else -> "neutral"
+        }
+        var linkString = if (entry.suspect.isBlank()) {
             getString(R.string.entry_report_no_suspect)
         } else {
             getString(R.string.entry_report_suspect, entry.suspect)
         }
+
+        var goodStrings = ""
+
+        if(entry.good1.isBlank() && !entry.good2.isBlank() && !entry.good3.isBlank()){
+            goodStrings = entry.good2 + " and " + entry.good3
+        }else if(!entry.good1.isBlank() && entry.good2.isBlank() && !entry.good3.isBlank()){
+            goodStrings = entry.good1 + " and " + entry.good3
+        }else if(!entry.good1.isBlank() && !entry.good2.isBlank() && entry.good3.isBlank()) {
+            goodStrings = entry.good1 + " and " + entry.good2
+        }else if(!entry.good1.isBlank() && entry.good2.isBlank() && entry.good3.isBlank()) {
+            goodStrings = entry.good1
+        }else if(entry.good1.isBlank() && !entry.good2.isBlank() && entry.good3.isBlank()) {
+            goodStrings = entry.good2
+        }else if(entry.good1.isBlank() && entry.good2.isBlank() && !entry.good3.isBlank()) {
+            goodStrings = entry.good3
+        }else if(!entry.good1.isBlank() && !entry.good2.isBlank() && !entry.good3.isBlank()) {
+            goodStrings = entry.good1 + ", " + entry.good2 + ", and " + entry.good3
+        }else{
+            goodStrings = "nothing... nothing at all"
+        }
+
+
+
+
         return getString(R.string.entry_report,
-            entry.title, dateString, solvedString, suspect)
+            entry.title, dateString, solvedString, ratingString, goodStrings, linkString)
     }
 
     companion object{

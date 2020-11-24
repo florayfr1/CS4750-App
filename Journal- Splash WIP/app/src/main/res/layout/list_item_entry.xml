@@ -31,6 +31,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/entry_date"
+        android:fontFamily="casual"
+
 
         app:layout_constraintBottom_toTopOf="@+id/mood"
         app:layout_constraintEnd_toEndOf="parent"

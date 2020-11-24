@@ -3,10 +3,13 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#332108</item>
+        <item name="colorPrimary">@color/latte</item>
 
     </style>
 
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:fontFamily">casual</item>
+    </style>
 
     <!-- The launcher theme. It sets the main window background to the launch_screen drawable -->
     <style name= "AppTheme.Launcher">

@@ -148,17 +148,17 @@ class EntryListFragment : Fragment() {
                 solvedImageView.setImageDrawable(null)
             }
             when (entry.rating) {
-                0F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley1, null))
-                0.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley1, null))
-                1F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley1, null))
-                1.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley2, null))
-                2F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley2, null))
-                2.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley3, null))
-                3F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley3, null))
-                3.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley4, null))
-                4F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley4, null))
-                4.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley5, null))
-                5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley5, null))
+                0F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.horrible, null))
+                0.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.horrible, null))
+                1F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.horrible, null))
+                1.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.bad, null))
+                2F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.bad, null))
+                2.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.okay, null))
+                3F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.okay, null))
+                3.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.great, null))
+                4F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.great, null))
+                4.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.amazing, null))
+                5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.amazing, null))
                 else -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.logo, null))
             }
         }
