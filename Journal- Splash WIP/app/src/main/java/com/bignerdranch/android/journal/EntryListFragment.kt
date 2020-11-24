@@ -1,5 +1,6 @@
 package com.bignerdranch.android.journal
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +8,8 @@ import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -29,6 +32,7 @@ class EntryListFragment : Fragment() {
 
     private lateinit var entryRecyclerView: RecyclerView
     private var adapter: EntryAdapter? = EntryAdapter(emptyList())
+
 
     private val entryListViewModel: EntryListViewModel by lazy {
         ViewModelProviders.of(this).get(EntryListViewModel::class.java)
@@ -118,14 +122,18 @@ class EntryListFragment : Fragment() {
 
         private val dateTextView: TextView = itemView.findViewById(R.id.entry_date)
         private val solvedImageView: ImageView = itemView.findViewById(R.id.entry_solved)
+        private val moodImageView: ImageView = itemView.findViewById(R.id.mood)
+
 
         init {
             itemView.setOnClickListener(this)
         }
 
+        @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(entry: Entry) {
             this.entry = entry
             titleTextView.text = this.entry.title
+
 
             val dateFormat: DateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.US)
             dateTextView.text = dateFormat.format(this.entry.date)
@@ -138,6 +146,20 @@ class EntryListFragment : Fragment() {
                 solvedImageView.setImageBitmap(bitmap)
             } else {
                 solvedImageView.setImageDrawable(null)
+            }
+            when (entry.rating) {
+                0F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley1, null))
+                0.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley1, null))
+                1F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley1, null))
+                1.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley2, null))
+                2F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley2, null))
+                2.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley3, null))
+                3F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley3, null))
+                3.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley4, null))
+                4F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley4, null))
+                4.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley5, null))
+                5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.smiley5, null))
+                else -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.logo, null))
             }
         }
 
