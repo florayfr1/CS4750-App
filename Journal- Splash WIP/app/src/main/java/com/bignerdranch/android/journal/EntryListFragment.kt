@@ -125,6 +125,7 @@ class EntryListFragment : Fragment() {
         private val moodImageView: ImageView = itemView.findViewById(R.id.mood)
 
 
+
         init {
             itemView.setOnClickListener(this)
         }
@@ -147,6 +148,13 @@ class EntryListFragment : Fragment() {
             } else {
                 solvedImageView.setImageDrawable(null)
             }
+
+            solvedImageView.visibility = if (entry.isSolved) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+
             when (entry.rating) {
                 0F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.horrible, null))
                 0.5F -> moodImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.horrible, null))
