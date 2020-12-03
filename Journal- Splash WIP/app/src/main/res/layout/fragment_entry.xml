@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#96c418"
-        android:textColor="@color/brown"
+        android:textColor="#FFFFFF"
         android:fontFamily="casual"
         android:textStyle="bold"
         tools:text="Wed Nov 14 11:56 EST 2018" />
@@ -68,7 +68,7 @@
 
                 <ImageView
                     android:id="@+id/entry_photo"
-                    android:layout_width="200dp"
+                    android:layout_width="150dp"
                     android:layout_height="200dp"
                     android:background="@android:color/darker_gray"
                     android:cropToPadding="true"
@@ -91,7 +91,9 @@
                         android:layout_gravity="center_horizontal"
                         android:src="@android:drawable/ic_menu_camera"
                         android:background="@color/latte"
-                        android:layout_margin="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
 
                         />
                     <ImageButton
@@ -101,19 +103,12 @@
                         android:layout_gravity="center_horizontal"
                         android:src="@android:drawable/ic_menu_gallery"
                         android:background="@color/latte"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
                         />
 
                 </LinearLayout>
-
-                <CheckBox
-                    android:id="@+id/entry_solved"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="casual"
-
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/brown"
-                    android:text="@string/entry_solved_label" />
             </LinearLayout>
 
             <LinearLayout
@@ -272,9 +267,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
+                android:textColor="#FFFFFF"
                 android:background="@color/latte"
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp"
+                android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:text="@string/entry_suspect_text"/>
@@ -283,10 +280,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
+                android:textColor="#FFFFFF"
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/cream"
+                android:textStyle="bold"
                 android:layout_marginBottom="20dp"
                 android:text="@string/entry_report_text"/>
         </LinearLayout>

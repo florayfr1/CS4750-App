@@ -1,20 +1,22 @@
 package com.bignerdranch.android.journal
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -31,6 +33,9 @@ private const val REQUEST_DATE = 0
 private const val DATE_FORMAT = "EEE, MMM, dd"
 private const val REQUEST_CONTACT = 1
 private const val REQUEST_PHOTO = 2
+private const val IMAGE_CHOOSE = 1000;
+private const val PERMISSION_CODE = 1001;
+private const val REQUEST_CODE = 13
 
 class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
     private lateinit var entry: Entry
@@ -41,11 +46,10 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
     private lateinit var rateBar: RatingBar
 
     private lateinit var dateButton: Button
-    private lateinit var solvedCheckBox: CheckBox
     private lateinit var reportButton: Button
     private lateinit var suspectButton: Button
     private lateinit var photoButton: ImageButton
-    //private lateinit var galleryButton: ImageButton
+    private lateinit var galleryButton: ImageButton
 
     private lateinit var photoView: ImageView
 
@@ -62,6 +66,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         val entryId: UUID = arguments?.getSerializable(ARG_ENTRY_ID) as
                 UUID
         entryDetailViewModel.loadEntry(entryId)
+        entry.isSolved = true
     }
 
     override fun onCreateView(
@@ -77,12 +82,11 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         goodField3 = view.findViewById(R.id.entry_good3) as EditText
         rateBar = view.findViewById(R.id.ratingBar) as RatingBar
         dateButton = view.findViewById(R.id.entry_date) as Button
-        solvedCheckBox = view.findViewById(R.id.entry_solved) as CheckBox
         reportButton = view.findViewById(R.id.entry_report) as Button
         suspectButton = view.findViewById(R.id.entry_suspect) as Button
 
         photoButton = view.findViewById(R.id.entry_camera) as ImageButton
-        //galleryButton = view.findViewById(R.id.entry_gallery) as ImageButton
+        galleryButton = view.findViewById(R.id.entry_gallery) as ImageButton
 
         photoView = view.findViewById(R.id.entry_photo) as ImageView
 
@@ -216,11 +220,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         rateBar.setOnRatingBarChangeListener { ratingBar, _, b ->
             entry.rating = ratingBar.rating
         }
-        solvedCheckBox.apply {
-            setOnCheckedChangeListener{ _, isChecked ->
-                entry.isSolved = isChecked
-            }
-        }
+
 
         dateButton.setOnClickListener {
             DatePickerFragment.newInstance(entry.date).apply {
@@ -293,7 +293,41 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
             }
         }
 
+        galleryButton.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if (this.context?.let { it1 -> checkSelfPermission(it1, Manifest.permission.READ_EXTERNAL_STORAGE) } ==PackageManager.PERMISSION_DENIED){
+                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    requestPermissions(permissions, PERMISSION_CODE)
+                } else{
+                    chooseImageGallery()
+                }
+            }else{
+                chooseImageGallery()
+            }
 
+
+        }
+    }
+
+    private fun chooseImageGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+
+        startActivityForResult(intent, IMAGE_CHOOSE)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when(requestCode){
+            PERMISSION_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    chooseImageGallery()
+                }
+            }
+        }
     }
 
     override fun onStop() {
@@ -321,10 +355,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
 
         val dateFormat: java.text.DateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG, Locale.US)
         dateButton.text = dateFormat.format(entry.date)
-        solvedCheckBox.apply {
-            isChecked = entry.isSolved
-            jumpDrawablesToCurrentState()
-        }
+
         if (entry.suspect.isNotEmpty()) {
             suspectButton.text = entry.suspect
         }
@@ -374,16 +405,18 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 updatePhotoView()
             }
+
+            requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK ->{
+                photoView.setImageURI(data?.data)
+                //val path = data?.extras?.get("data") as String
+                //val file = File(path)
+                //photoFile = file
+                updatePhotoView()
+            }
         }
     }
 
     private fun getEntryReport(): String {
-        val solvedString = if (entry.isSolved) {
-            getString(R.string.entry_report_solved)
-        } else {
-            getString(R.string.entry_report_unsolved)
-        }
-
         val dateFormat: java.text.DateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG, Locale.US)
         val dateString = dateFormat.format(entry.date)
 
@@ -430,9 +463,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
 
 
 
-
-        return getString(R.string.entry_report,
-            entry.title, dateString, solvedString, ratingString, goodStrings, linkString)
+        return getString(R.string.entry_report, entry.title, dateString, ratingString, goodStrings, linkString)
     }
 
     companion object{

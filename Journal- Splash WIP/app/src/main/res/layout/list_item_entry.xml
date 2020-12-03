@@ -53,8 +53,8 @@
 
     <ImageView
         android:id="@+id/mood"
-        android:layout_width="124dp"
-        android:layout_height="47dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
 
 
         app:layout_constraintBottom_toBottomOf="parent"
