@@ -237,6 +237,7 @@
                 android:layout_height="wrap_content"
                 android:text="" />
             <LinearLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -252,12 +253,16 @@
                     android:text="@string/entry_video_label"
                     android:textColor="@color/brown" />
 
-                <VideoView
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                     android:id="@+id/videoView"
                     android:layout_width="300dp"
                     android:layout_height="200dp"
                     android:gravity="center_horizontal"
                     android:layout_gravity="center_horizontal"
+
+                    app:videoId="S0Q4gqBUs7c"
+                    app:autoPlay="true"
+                    app:showFullScreenButton="false"
                     />
 
             </LinearLayout>
