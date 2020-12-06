@@ -109,6 +109,15 @@
                         />
 
                 </LinearLayout>
+                <CheckBox
+                    android:id="@+id/entry_solved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="casual"
+
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/brown"
+                    android:text="@string/entry_solved_label" />
             </LinearLayout>
 
             <LinearLayout

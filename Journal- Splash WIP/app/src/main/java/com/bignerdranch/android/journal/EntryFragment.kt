@@ -50,7 +50,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
     private lateinit var suspectButton: Button
     private lateinit var photoButton: ImageButton
     private lateinit var galleryButton: ImageButton
-
+    private lateinit var solvedCheckBox: CheckBox
     private lateinit var photoView: ImageView
 
     private lateinit var photoFile: File
@@ -66,7 +66,6 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         val entryId: UUID = arguments?.getSerializable(ARG_ENTRY_ID) as
                 UUID
         entryDetailViewModel.loadEntry(entryId)
-        entry.isSolved = true
     }
 
     override fun onCreateView(
@@ -84,6 +83,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         dateButton = view.findViewById(R.id.entry_date) as Button
         reportButton = view.findViewById(R.id.entry_report) as Button
         suspectButton = view.findViewById(R.id.entry_suspect) as Button
+        solvedCheckBox = view.findViewById(R.id.entry_solved) as CheckBox
 
         photoButton = view.findViewById(R.id.entry_camera) as ImageButton
         galleryButton = view.findViewById(R.id.entry_gallery) as ImageButton
@@ -244,6 +244,11 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
                 startActivity(chooserIntent)
             }
         }
+        solvedCheckBox.apply {
+            setOnCheckedChangeListener{ _, isChecked ->
+                entry.isSolved = isChecked
+            }
+        }
 
         suspectButton.apply {
 
@@ -352,6 +357,11 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         goodField2.setText(entry.good2)
         goodField3.setText(entry.good3)
         rateBar.rating = entry.rating
+
+        solvedCheckBox.apply {
+            isChecked = entry.isSolved
+            jumpDrawablesToCurrentState()
+        }
 
         val dateFormat: java.text.DateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG, Locale.US)
         dateButton.text = dateFormat.format(entry.date)
