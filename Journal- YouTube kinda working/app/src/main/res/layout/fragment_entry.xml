@@ -365,7 +365,8 @@
                 android:paddingStart="10dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
-                android:text="@string/entry_suspect_text"/>
+                android:text="@string/entry_suspect_text"
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
