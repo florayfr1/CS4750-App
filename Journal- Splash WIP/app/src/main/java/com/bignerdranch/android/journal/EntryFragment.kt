@@ -21,9 +21,6 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import java.io.File
 import java.util.*
 
@@ -58,7 +55,6 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
 
     private lateinit var photoFile: File
     private lateinit var photoUri: Uri
-    private lateinit var videoView: YouTubePlayerView
 
     private val entryDetailViewModel: EntryDetailViewModel by lazy {
         ViewModelProviders.of(this).get(EntryDetailViewModel::class.java)
@@ -94,8 +90,6 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
 
         photoView = view.findViewById(R.id.entry_photo) as ImageView
 
-        videoView = view.findViewById(R.id.videoView)
-
         return view
     }
 
@@ -112,7 +106,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
                         FileProvider.getUriForFile(requireActivity(),
                             "com.bignerdranch.android.journal.fileprovider",
                             photoFile)
-                    lifecycle.addObserver(videoView)
+
                     updateUI()
                 }
             })
@@ -310,14 +304,9 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
             }else{
                 chooseImageGallery()
             }
-        }
 
-        videoView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                val videoId = "S0Q4gqBUs7c"
-                youTubePlayer.loadVideo(videoId, 0f)
-            }
-        })
+
+        }
     }
 
     private fun chooseImageGallery() {
