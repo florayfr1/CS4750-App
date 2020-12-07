@@ -1,5 +1,9 @@
 package com.bignerdranch.android.journal
 
+import android.Manifest
+import android.os.Build
+import androidx.core.content.ContextCompat.checkSelfPermission
+
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -33,6 +37,10 @@ private const val REQUEST_DATE = 0
 private const val DATE_FORMAT = "EEE, MMM, dd"
 private const val REQUEST_CONTACT = 1
 private const val REQUEST_PHOTO = 2
+private const val IMAGE_CHOOSE = 1000;
+private const val PERMISSION_CODE = 1001;
+private const val REQUEST_CODE = 13
+
 
 class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
     private lateinit var entry: Entry
@@ -40,6 +48,9 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
     private lateinit var goodField1: EditText
     private lateinit var goodField2: EditText
     private lateinit var goodField3: EditText
+    private lateinit var reflectField: EditText
+    private lateinit var linkField: EditText
+
     private lateinit var rateBar: RatingBar
 
     private lateinit var dateButton: Button
@@ -47,7 +58,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
     private lateinit var reportButton: Button
     private lateinit var suspectButton: Button
     private lateinit var photoButton: ImageButton
-    //private lateinit var galleryButton: ImageButton
+    private lateinit var galleryButton: ImageButton
 
     private lateinit var photoView: ImageView
 
@@ -79,6 +90,9 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         goodField1 = view.findViewById(R.id.entry_good1) as EditText
         goodField2 = view.findViewById(R.id.entry_good2) as EditText
         goodField3 = view.findViewById(R.id.entry_good3) as EditText
+        reflectField = view.findViewById(R.id.entry_reflection) as EditText
+        linkField = view.findViewById(R.id.entry_song_link) as EditText
+
         rateBar = view.findViewById(R.id.ratingBar) as RatingBar
         dateButton = view.findViewById(R.id.entry_date) as Button
         solvedCheckBox = view.findViewById(R.id.entry_solved) as CheckBox
@@ -86,7 +100,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         suspectButton = view.findViewById(R.id.entry_suspect) as Button
 
         photoButton = view.findViewById(R.id.entry_camera) as ImageButton
-        //galleryButton = view.findViewById(R.id.entry_gallery) as ImageButton
+        galleryButton = view.findViewById(R.id.entry_gallery) as ImageButton
 
         photoView = view.findViewById(R.id.entry_photo) as ImageView
 
@@ -218,6 +232,31 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         goodField2.addTextChangedListener(goodWatcher2)
         goodField3.addTextChangedListener(goodWatcher3)
 
+        val reflectWatcher = object : TextWatcher {
+            override fun beforeTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+                // This space intentionally left blank
+            }
+
+            override fun onTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                entry.reflect = sequence.toString()
+            }
+
+            override fun afterTextChanged(sequence: Editable?) {
+                // This one too
+            }
+        }
+        reflectField.addTextChangedListener(reflectWatcher)
+
         rateBar.setOnRatingBarChangeListener { ratingBar, _, b ->
             entry.rating = ratingBar.rating
         }
@@ -300,11 +339,71 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
 
         videoView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
-                val videoId = "S0Q4gqBUs7c"
+                val videoId = "dfqPJp7Q7qE"
                 youTubePlayer.loadVideo(videoId, 0f)
             }
         })
 
+        galleryButton.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if (this.context?.let { it1 -> checkSelfPermission(it1, Manifest.permission.READ_EXTERNAL_STORAGE) } ==PackageManager.PERMISSION_DENIED){
+                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    requestPermissions(permissions, PERMISSION_CODE)
+                } else{
+                    chooseImageGallery()
+                }
+            }else{
+                chooseImageGallery()
+            }
+
+        }
+
+        val linkWatcher = object : TextWatcher {
+            override fun beforeTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+                // This space intentionally left blank
+            }
+
+            override fun onTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                entry.link = sequence.toString()
+            }
+
+            override fun afterTextChanged(sequence: Editable?) {
+                // This one too
+            }
+        }
+
+        linkField.addTextChangedListener(linkWatcher)
+    }
+
+    private fun chooseImageGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+
+        startActivityForResult(intent, IMAGE_CHOOSE)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when(requestCode){
+            PERMISSION_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    chooseImageGallery()
+                }
+            }
+        }
     }
 
     override fun onStop() {
@@ -328,6 +427,9 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         goodField1.setText(entry.good1)
         goodField2.setText(entry.good2)
         goodField3.setText(entry.good3)
+        reflectField.setText(entry.reflect)
+        linkField.setText(entry.link)
+
         rateBar.rating = entry.rating
 
         val dateFormat: java.text.DateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG, Locale.US)
@@ -340,6 +442,8 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
             suspectButton.text = entry.suspect
         }
         updatePhotoView()
+
+
     }
 
 
@@ -383,6 +487,14 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
             requestCode == REQUEST_PHOTO -> {
                 requireActivity().revokeUriPermission(photoUri,
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                updatePhotoView()
+            }
+
+            requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK ->{
+                photoView.setImageURI(data?.data)
+                //val path = data?.extras?.get("data") as String
+                //val file = File(path)
+                //photoFile = file
                 updatePhotoView()
             }
         }
@@ -440,8 +552,7 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
         }
 
 
-        return getString(R.string.entry_report,
-            entry.title, dateString, solvedString, ratingString, goodStrings, linkString)
+        return getString(R.string.entry_report, entry.title, dateString, ratingString, goodStrings, linkString)
     }
 
     companion object{

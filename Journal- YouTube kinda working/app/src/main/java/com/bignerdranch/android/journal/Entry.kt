@@ -13,9 +13,12 @@ data class Entry(@PrimaryKey val id: UUID = UUID.randomUUID(),
                  var good1: String = "",
                  var good2: String = "",
                  var good3: String = "",
-                 var rating: Float = 0.0F
+                 var rating: Float = 0.0F,
+                 var reflect: String = "",
+                 var link: String = ""
 
-    ){
+
+){
     val photoFileName
         get() = "IMG_$id.jpg"
 }

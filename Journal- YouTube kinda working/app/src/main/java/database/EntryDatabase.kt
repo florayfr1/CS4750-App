@@ -7,14 +7,14 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.bignerdranch.android.journal.Entry
 
-@Database(entities = [ Entry::class ], version=6)
+@Database(entities = [ Entry::class ], version=8)
 @TypeConverters(EntryTypeConverters::class)
 abstract class EntryDatabase : RoomDatabase() {
 
-    object migration_5_6 : Migration(5, 6) {
+    object migration_7_8 : Migration(7, 8) {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.execSQL(
-                "ALTER TABLE Entry ADD COLUMN rating REAL NOT NULL DEFAULT '0.0'"
+                "ALTER TABLE Entry ADD COLUMN link TEXT NOT NULL DEFAULT ''"
 
             )
         }

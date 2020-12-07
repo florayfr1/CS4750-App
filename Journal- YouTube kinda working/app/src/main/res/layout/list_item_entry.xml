@@ -10,13 +10,13 @@
         android:id="@+id/entry_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="casual"
+        android:fontFamily="@font/gaegubold"
+        android:textSize="25sp"
         android:text="@string/entry_title"
 
 
         android:textColor="@color/brown"
 
-        android:textSize="18sp"
         android:typeface="normal"
 
         app:layout_constraintBottom_toTopOf="@+id/entry_date"
@@ -31,9 +31,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/entry_date"
-        android:fontFamily="casual"
-
-
+        android:fontFamily="@font/gaegubold"
+        android:textSize="21sp"
         app:layout_constraintBottom_toTopOf="@+id/mood"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.446"

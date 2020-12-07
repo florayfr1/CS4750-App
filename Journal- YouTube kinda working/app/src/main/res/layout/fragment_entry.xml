@@ -26,7 +26,6 @@
             android:orientation="vertical">
 
             <TextView
-                style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -42,7 +41,6 @@
                 android:typeface="normal" />
 
             <TextView
-                style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -68,7 +66,6 @@
                 />
 
             <TextView
-                style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -174,6 +171,9 @@
                 android:id="@+id/entry_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+
                 android:fontFamily="@font/gaegubold"
                 android:textSize="25sp"
                 android:textCursorDrawable="@color/cream"
@@ -186,10 +186,11 @@
                 android:text="" />
 
             <TextView
-                style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/gaegubold"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:textSize="25sp"
                 android:text="@string/entry_good_label"
                 android:textColor="@color/brown" />
@@ -215,6 +216,7 @@
                         android:id="@+id/entry_good1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="text|textMultiLine"
                         android:fontFamily="@font/gaegubold"
                         android:textSize="25sp"
                         android:hint="@string/entry_good_hint" />
@@ -236,8 +238,9 @@
                         android:id="@+id/entry_good2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="text|textMultiLine"
                         android:fontFamily="@font/gaegubold"
-                        android:textSize="25sp"
+                        android:textSize="20sp"
                         android:hint="@string/entry_good_hint" />
                 </TableRow>
 
@@ -257,8 +260,9 @@
                         android:id="@+id/entry_good3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="text|textMultiLine"
                         android:fontFamily="@font/gaegubold"
-                        android:textSize="25sp"
+                        android:textSize="20sp"
                         android:hint="@string/entry_good_hint" />
                 </TableRow>
 
@@ -272,9 +276,10 @@
                 android:text="" />
 
             <TextView
-                style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:fontFamily="@font/gaegubold"
                 android:textSize="25sp"
                 android:text="@string/entry_ref_label"
@@ -282,6 +287,8 @@
             <EditText
                 android:id="@+id/entry_reflection"
                 android:layout_width="match_parent"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_height="175dp"
                 android:padding="5dp"
                 android:inputType="text|textMultiLine"
@@ -302,7 +309,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="?android:listSeparatorTextViewStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -320,7 +326,7 @@
                     android:gravity="center_horizontal"
                     android:layout_gravity="center_horizontal"
 
-                    app:videoId="S0Q4gqBUs7c"
+                    app:videoId="dfqPJp7Q7qE"
                     app:autoPlay="true"
                     app:showFullScreenButton="false"
                     />
@@ -329,12 +335,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gaegubold"
-                    android:textSize="25sp"
-                    android:text=" LINK"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"                    android:textSize="25sp"
+                    android:text="LINK"
                     android:textColor="@color/brown" />
                 <EditText
                     android:id="@+id/entry_song_link"
                     android:layout_width="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gaegubold"
                     android:textSize="25sp"
@@ -356,6 +366,21 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:text="@string/entry_suspect_text"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/dumb3"
+                android:gravity="center_horizontal"
+                android:paddingBottom="0dp"
+                android:text="DONE FOR THE DAY!"
+                
+                android:textColor="@color/brown"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:typeface="normal" />
             <Button
                 android:id="@+id/entry_report"
                 android:layout_width="wrap_content"
