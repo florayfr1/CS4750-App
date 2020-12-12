@@ -19,6 +19,9 @@
     <string name="entry_good1">Good 1</string>
     <string name="entry_good2">Good 2</string>
     <string name="entry_good3">Good 3</string>
+    <string name="notification_channel_name">Days Go By</string>
+    <string name="new_pictures_title">It\'s a new day!</string>
+    <string name="new_pictures_text">Make a new entry in your journal!</string>
 
 
 
