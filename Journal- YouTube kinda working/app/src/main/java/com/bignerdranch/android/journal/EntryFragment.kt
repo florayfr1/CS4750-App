@@ -1,14 +1,12 @@
 package com.bignerdranch.android.journal
 
 import android.Manifest
-import android.os.Build
-import androidx.core.content.ContextCompat.checkSelfPermission
-
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.MediaStore
@@ -18,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -27,6 +26,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import java.io.File
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 private const val TAG = "EntryFragment"
@@ -337,13 +338,6 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
             }
         }
 
-        videoView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                val videoId = "dfqPJp7Q7qE"
-                youTubePlayer.loadVideo(videoId, 0f)
-            }
-        })
-
         galleryButton.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if (this.context?.let { it1 -> checkSelfPermission(it1, Manifest.permission.READ_EXTERNAL_STORAGE) } ==PackageManager.PERMISSION_DENIED){
@@ -357,6 +351,13 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
             }
 
         }
+
+        videoView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                val videoId = "dfqPJp7Q7qE"
+                youTubePlayer.loadVideo(videoId, 0f)
+            }
+        })
 
         val linkWatcher = object : TextWatcher {
             override fun beforeTextChanged(
@@ -378,11 +379,28 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
             }
 
             override fun afterTextChanged(sequence: Editable?) {
-                // This one too
+                videoView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                    override fun onReady(youTubePlayer: YouTubePlayer) {
+                        val videoId = getVideoId(entry.link)
+                        youTubePlayer.loadVideo(videoId, 0f)
+                    }
+                })
             }
         }
 
         linkField.addTextChangedListener(linkWatcher)
+    }
+
+    private fun getVideoId(url : String): String
+    {
+        var id =""
+        val compiledPattern: Pattern =
+            Pattern.compile("(?<=v=).*?(?=&|$)", Pattern.CASE_INSENSITIVE)
+        val matcher: Matcher = compiledPattern.matcher(url)
+        if (matcher.find()) {
+            id = (matcher.group())
+        }
+        return id
     }
 
     private fun chooseImageGallery() {
@@ -442,10 +460,18 @@ class EntryFragment : Fragment(), DatePickerFragment.Callbacks{
             suspectButton.text = entry.suspect
         }
         updatePhotoView()
-
+        updateVideoView()
 
     }
 
+    private fun updateVideoView(){
+        videoView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                val videoId = getVideoId(entry.link)
+                youTubePlayer.loadVideo(videoId, 0f)
+            }
+        })
+    }
 
     private fun updatePhotoView() {
         if (photoFile.exists()) {
